@@ -1,0 +1,30 @@
+body {
+	color: #35454a;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 400;
+}
+
+html {
+	box-sizing: border-box;
+  }
+  *, *:before, *:after {
+	box-sizing: inherit;
+	}
+body {
+	min-height:100vh;
+}
+.page {
+	min-height:100vh;
+	display: flex;
+	flex-direction: column;
+}
+.footer {
+	margin-top: auto;
+}

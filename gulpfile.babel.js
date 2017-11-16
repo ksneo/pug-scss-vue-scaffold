@@ -1,50 +1,3 @@
-const root = {
-  src:   `${__dirname}/src`,
-  dist:  `${__dirname}/dist`,
-  tmp:   `${__dirname}/tmp`
-}
-
-const paths = {
-  src: {
-    root: `${root.src}`,
-    html: `${root.src}/html`,
-    js:   `${root.src}/js`,
-    css:  `${root.src}/css`,
-    static: `${root.src}/static`
-  },
-  dist: {
-    root: `${root.dist}`,
-    js:   `${root.dist}/js`,
-    css:  `${root.dist}/css`,
-    font: `${root.dist}/fonts`
-  },
-  node: {
-    modules: `${__dirname}/node_modules`
-  }
-}
-const resource = {
-  src: {
-    pug: `${paths.src.html}/**/*.pug`,
-    webpack: {
-      babel: `${paths.src.js}/entry/**/*.js`
-    },
-    sass:   `${paths.src.css}/**/*.s+(a|c)ss`,
-    static: `${paths.src.static}/**/*`
-  },
-  vendor: {
-    js: {
-      jquery:     `${paths.node.modules}/jquery/dist/jquery.js`,
-      lodash:     `${paths.node.modules}/lodash/lodash.js`,
-      moment:     `${paths.node.modules}/moment/moment.js`,
-      flatpickr:  `${paths.node.modules}/flatpickr/dist/flatpickr.js`,
-      vue:        `${paths.node.modules}/vue/dist/vue.js`,
-      bootstrap:  `${paths.node.modules}/bootstrap-sass/assets/javascripts/bootstrap.js`,
-    },
-    css: [`${paths.node.modules}/flatpickr/dist/flatpickr.min.css`],
-    fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`
-  }
-}
-
 import gulp from 'gulp'
 import gulpLoaderPlugins from 'gulp-load-plugins'
 import del from 'del'
@@ -55,12 +8,16 @@ import runSequence from 'run-sequence'
 import browserSyncTool from 'browser-sync'
 import named from 'vinyl-named'
 import RevAll from 'gulp-rev-all'
+import './build_scripts/build-pug'
+import {root, paths, resource} from './build_scripts/settings';
 
 const $ = gulpLoaderPlugins()
 const browserSync   = browserSyncTool.create()
+const reload = browserSync.reload;
 
 let production = false
 
+// console.log($);
 // build and watch for developer
 gulp.task('default', ['build', 'server'])
 
@@ -70,7 +27,7 @@ gulp.task('build', (callback) =>
 )
 
 //## build production
-gulp.task('build-prod', (callback) => 
+gulp.task('build-prod', (callback) =>
   runSequence('production', 'build', 'revision', callback)
 )
 
@@ -117,17 +74,6 @@ gulp.task('build:webpack', () => {
     .pipe(browserSync.stream())
 })
 
-// compile Pug -> HTML
-gulp.task('build:pug', () => {
-  return gulp.src(resource.src.pug)
-    .pipe($.plumber())
-     .pipe($.pug())
-    // .pipe($.htmlhint())
-    //.pipe($.htmlhint.reporter())
-    .pipe(gulp.dest(paths.dist.root))
-    .pipe(browserSync.stream())  
-})
-
 // compile Sass -> CSS
 gulp.task('build:sass', () => {
   return gulp.src(resource.src.sass)
@@ -166,6 +112,7 @@ gulp.task('server', () => {
   gulp.watch(resource.src.pug,    ['build:pug'])
   gulp.watch(resource.src.sass,   ['build:sass'])
   gulp.watch(resource.src.static, ['build:static'])
+  gulp.watch(`${resource.src.components}/**/*.pug`, ['build:pug'], reload())
 })
 
 // append Resource Revision

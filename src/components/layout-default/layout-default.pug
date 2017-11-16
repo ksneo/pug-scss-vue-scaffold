@@ -1,0 +1,20 @@
+include /../node_modules/bemto.pug/bemto.pug
+include ../page/page.pug
+include ../header/header.pug
+include ../nav/nav.pug
+include ../footer/footer.pug
+include ../scripts/scripts.pug
+
+doctype html
+html(lang='ru')
+	include ../head/head
+	+page
+		+header
+		+nav
+		block content
+		+footer
+		block bottom
+			p test
+			p test
+		+scripts(['vendors.js', 'app.js'])
+		script require('src/scripts/app.js');

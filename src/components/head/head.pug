@@ -1,0 +1,14 @@
+head
+	meta(charset='utf-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimal-ui')
+	meta(http-equiv='X-UA-Compatible' content='IE=edge')
+
+
+	block head
+	title= pageTitle || ''
+	meta(name='description' content=pageDescription || '')
+	meta(name='keywords' content=pageKeywords || '')
+	base(href="/")
+	link(rel='shortcut icon' href='/assets/images/favicon.ico' type='image/x-icon')
+	link(href='/assets/styles/vendors.css' rel='stylesheet')
+	link(href='/assets/styles/app.css' rel='stylesheet')
