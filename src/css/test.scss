@@ -1,3 +1,6 @@
 .test {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    transform: scale(0.5);
 }

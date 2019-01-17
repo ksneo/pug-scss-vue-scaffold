@@ -36,8 +36,9 @@ gulp.task(
 );
 
 // production option
-gulp.task('production', () => {
+gulp.task('production', cb => {
     process.env.NODE_ENV = 'production';
+    cb();
 });
 
 // append Resource Revision
@@ -85,7 +86,7 @@ gulp.task('server', cb => {
 
     // watch for source
     function errorHandler(err) {
-        // eslint-no-console ignore
+        // eslint-disable-line no-console off
         console.log(err.toString());
     }
 

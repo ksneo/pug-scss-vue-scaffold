@@ -1,7 +1,7 @@
 import path from 'path';
 
 const projectDir = path.dirname(__dirname);
-const sourceGlob = 'src/';
+const sourceGlob = 'src';
 const distGlob = 'client/static';
 export const root = {
     src: path.join(projectDir, sourceGlob),
