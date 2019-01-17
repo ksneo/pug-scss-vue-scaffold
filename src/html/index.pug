@@ -1,4 +1,9 @@
 extends /components/layout-default/layout-default.pug
 
 block content
-  p test
+  p test1
+  | {{ django test }}
+  ul
+    | {% for int in ints %}
+    li {{ int }}
+    | {% endfor %}

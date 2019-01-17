@@ -1,52 +1,63 @@
 import path from 'path';
 
-const project_dir = path.dirname(__dirname);
-
+const projectDir = path.dirname(__dirname);
+const sourceGlob = 'src/';
+const distGlob = 'client/static';
 export const root = {
-    src: `${project_dir}/src`,
-    dist: `${project_dir}/dist`,
-    tmp: `${project_dir}/tmp`
-}
+    src: path.join(projectDir, sourceGlob),
+    dist: path.join(projectDir, distGlob),
+    tmp: path.join(projectDir, 'tmp')
+};
 
 export const paths = {
     src: {
-        root: `${root.src}`,
-        html: `${root.src}/html`,
-        js: `${root.src}/js`,
-        css: `${root.src}/css`,
-        static: `${root.src}/static`,
-        components: `${root.src}/components`
+        root: root.src,
+        html: path.join(root.src, 'html'),
+        js: path.join(root.src, 'js'),
+        css: path.join(root.src, 'css'),
+        static: path.join(root.src, 'static'),
+        components: path.join(root.src, 'components'),
+        data: path.join(root.src, 'data')
     },
     dist: {
-        root: `${root.dist}`,
-        js: `${root.dist}/js`,
-        css: `${root.dist}/css`,
-        font: `${root.dist}/fonts`
+        root: root.dist,
+        js: path.join(root.dist, 'js'),
+        css: path.join(root.dist, 'css'),
+        font: path.join(root.dist, 'fonts')
     },
     node: {
-        modules: `${project_dir}/node_modules`
+        modules: `${projectDir}/node_modules`
     }
-}
+};
+// globs for watch
 export const resource = {
     src: {
-        pug: `${paths.src.html}/**/*.pug`,
+        pug: [
+            `${sourceGlob}/html/**/*.pug`,
+            `${sourceGlob}/components/**/*.pug`
+        ],
+        html: `${sourceGlob}/html/**/*.pug`, // только то, что надо собрать
         webpack: {
-            babel: `${paths.src.js}/entry/**/*.js`
+            babel: [
+                `${sourceGlob}/js/**/*.js`,
+                `${sourceGlob}/js/**/*.ts`,
+                `!${sourceGlob}/js/vendors/*.js`
+            ]
         },
-        sass: `${paths.src.css}/**/*.s+(a|c)ss`,
-        static: `${paths.src.static}/**/*`,
-        components: `${paths.src.components}`
+        sass: `${sourceGlob}/**/*.s+(a|c)ss`,
+        static: `${sourceGlob}/static/**/*.*`,
+        components: `${sourceGlob}/components`
+    },
+    dist: {
+        html: `${distGlob}/**/*.html`
     },
     vendor: {
         js: {
             jquery: `${paths.node.modules}/jquery/dist/jquery.js`,
-            lodash: `${paths.node.modules}/lodash/lodash.js`,
-            moment: `${paths.node.modules}/moment/moment.js`,
-            flatpickr: `${paths.node.modules}/flatpickr/dist/flatpickr.js`,
-            vue: `${paths.node.modules}/vue/dist/vue.js`,
-            bootstrap: `${paths.node.modules}/bootstrap-sass/assets/javascripts/bootstrap.js`
+            bootstrap: `${paths.node.modules}/bootstrap/dist/js/bootstrap.js`
         },
-        css: [`${paths.node.modules}/flatpickr/dist/flatpickr.min.css`],
+        css: [],
         fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`
     }
-}
+};
+export const production = () => process.env.NODE_ENV === 'production';
