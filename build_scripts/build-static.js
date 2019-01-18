@@ -1,6 +1,7 @@
 import gulp from 'gulp';
 import gulpLoaderPlugins from 'gulp-load-plugins';
 import browserSyncTool from 'browser-sync';
+import autoprefixer from 'autoprefixer';
 import { paths, resource, production } from './settings';
 
 const $ = gulpLoaderPlugins();
@@ -17,12 +18,9 @@ gulp.task('build:static', cb => {
     if (resource.vendor.css && resource.vendor.css.length > 0) {
         gulp.src(resource.vendor.css)
             .pipe($.concat('vendor.css'))
-            .pipe($.pleeease())
+            .pipe($.postcss([autoprefixer()]))
             .pipe(gulp.dest(paths.dist.css));
     }
-
-    // gulp.src(resource.vendor.fontawesome)
-    //   .pipe(gulp.dest(paths.dist.font));
 
     gulp.src(resource.src.static)
         .pipe($.changed(paths.dist.root))

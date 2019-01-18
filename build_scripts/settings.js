@@ -56,8 +56,13 @@ export const resource = {
             jquery: `${paths.node.modules}/jquery/dist/jquery.js`,
             bootstrap: `${paths.node.modules}/bootstrap/dist/js/bootstrap.js`
         },
-        css: [],
-        fontawesome: `${paths.node.modules}/font-awesome/fonts/**/*`
+        css: []
     }
 };
+
+export const buildSettings = {
+    // prettier: 'prettier', 'prettydiff', 'beautifier'
+    prettier: 'prettydiff'
+};
+
 export const production = () => process.env.NODE_ENV === 'production';

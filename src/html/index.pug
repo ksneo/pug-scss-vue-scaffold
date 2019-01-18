@@ -1,9 +1,12 @@
-extends /components/layout-default/layout-default.pug
-
-block content
-  p test12
-  | {{ django test }}
-  ul
-    | {% for int in ints %}
-    li {{ int }}
-    | {% endfor %}
+<!DOCTYPE html>
+html(lang="en")
+  | {% test plugin %}
+  head
+    title Document
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+  body
+    p {{ test }}
+    |{% test plugin %}
+    div New text
