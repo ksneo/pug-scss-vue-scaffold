@@ -1,14 +1,16 @@
+// @ts-nocheck
+/* eslint-disable no-console */
 import gulp from 'gulp';
 import del from 'del';
 
 import browserSyncTool from 'browser-sync';
 import RevAll from 'gulp-rev-all';
-import './build_scripts/build-pug';
+import './build_scripts/build-html';
 import './build_scripts/build-css';
 import './build_scripts/build-static';
 import './build_scripts/build-webpack';
 import './build_scripts/build-img';
-import { root, paths, resource } from './build_scripts/settings';
+import { root, paths, resource, buildSettings } from './build_scripts/settings';
 
 const browserSync = browserSyncTool.create('sync');
 
@@ -27,7 +29,7 @@ gulp.task(
     gulp.series(
         'clean',
         gulp.parallel(
-            'build:pug',
+            'build:html',
             'build:sass',
             'build:webpack',
             'build:static'
@@ -78,22 +80,33 @@ gulp.task('build-prod-revision', gulp.series('build-prod', 'revision'));
 // run Development Web Server (BrowserSync) [localhost:3000]
 gulp.task('server', cb => {
     // in this project we doesn't need in Browsersync
+    let browserSyncConfig = {};
 
-    // browserSync.init({
-    //   server: {baseDir: paths.dist.root},
-    //   notify: false
-    // })
+    if (buildSettings?.browserSync?.server) {
+        browserSyncConfig = {
+            open: false,
+            server: { baseDir: paths.dist.root },
+            notify: false
+        };
+    } else {
+        browserSyncConfig = {
+            open: false,
+            proxy: buildSettings?.browserSync?.proxy,
+            notify: false
+        };
+    }
+
+    browserSync.init(browserSyncConfig);
 
     // watch for source
     function errorHandler(err) {
-        // eslint-disable-line no-console off
         console.log(err.toString());
     }
 
-    gulp.watch(resource.src.pug, gulp.series('build:pug')).on(
-        'error',
-        errorHandler
-    );
+    gulp.watch(
+        [...resource.src.htmlSrc, ...resource.src.pugSrc],
+        gulp.series('build:html')
+    ).on('error', errorHandler);
 
     gulp.watch(resource.src.sass, gulp.series('build:sass')).on(
         'error',

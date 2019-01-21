@@ -4,6 +4,7 @@ import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
 import named from 'vinyl-named';
 import browserSyncTool from 'browser-sync';
+import VueLoaderPlugin from 'vue-loader/lib/plugin';
 import { paths, resource, production } from './settings';
 
 const $ = gulpLoaderPlugins();
@@ -21,15 +22,16 @@ gulp.task('build:webpack', cb => {
             rules: [
                 { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
                 { test: /\.ts$/, use: 'babel-loader', exclude: /node_modules/ },
-                { test: /\.vue$/, use: 'vue-loader', exclude: /node_modules/ }
+                { test: /\.vue$/, use: 'vue-loader', exclude: /node_modules/ },
+                { test: /\.html$/, use: 'raw-loader' }
             ]
         },
-        plugins: [],
+        plugins: [new VueLoaderPlugin()],
         resolve: {
             modules: ['node_modules', paths.src.js],
             extensions: ['*', '.js', '.vue'],
             alias: {
-                vue: 'vue/dist/vue.common.js',
+                vue$: 'vue/dist/vue.esm.js',
                 constants: `${paths.src.js}/constants`
             }
         }

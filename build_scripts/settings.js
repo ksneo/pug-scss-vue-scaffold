@@ -32,11 +32,16 @@ export const paths = {
 // globs for watch
 export const resource = {
     src: {
-        pug: [
+        pugSrc: [
             `${sourceGlob}/html/**/*.pug`,
             `${sourceGlob}/components/**/*.pug`
         ],
-        html: `${sourceGlob}/html/**/*.pug`, // только то, что надо собрать
+        htmlSrc: [
+            `${sourceGlob}/html/**/*.html`,
+            `${sourceGlob}/components/**/*.html`
+        ],
+        pug: [`${sourceGlob}/html/**/*.pug`],
+        html: [`${sourceGlob}/html/**/*.html`], // только то, что надо собрать
         webpack: {
             babel: [
                 `${sourceGlob}/js/**/*.js`,
@@ -62,7 +67,13 @@ export const resource = {
 
 export const buildSettings = {
     // prettier: 'prettier', 'prettydiff', 'beautifier'
-    prettier: 'prettydiff'
+    prettier: 'beautifier',
+    browserSync: {
+        // if true use browserSync dev server else use proxy
+        // path to files from paths.dist.root settings;
+        server: true,
+        proxy: '127.0.0.1:8000'
+    }
 };
 
 export const production = () => process.env.NODE_ENV === 'production';

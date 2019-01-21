@@ -16,8 +16,7 @@
     "save:site": "python manage.py dumpdata --natural-foreign --indent 2 -e auth.permission -e auth.group -e auth.user -e admin.logentry -e contenttypes -e wagtailcore.GroupCollectionPermission -e wagtailcore.pagerevision -e wagtailimages.rendition -e sessions -e pjdel -e background_task > ./pjsite/fixtures/pjsite.json",
     "backup:db": "docker exec db_pizzajazz /usr/bin/mysqldump -u pizzajazz pizzajazz > ./database_backup/db_backup.sql",
     "convert:scripts": "dos2unix ./scripts/*.sh",
-    "docker:bash": "docker exec -it pizza_django bash",
-    "gulp:test": "gulp server"
+    "docker:bash": "docker exec -it pizza_django bash"
   },
   "repository": {
     "type": "git",
@@ -39,6 +38,8 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
@@ -46,6 +47,7 @@
     "@babel/runtime": "^7.2.0",
     "@babel/runtime-corejs2": "^7.2.0",
     "autoprefixer": "^9.4.5",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "~8.0.5",
     "bemto.pug": "^2.1.0",
     "bootstrap": "^4.2.1",
@@ -60,6 +62,7 @@
     "eslint-plugin-jsx-a11y": "6.1.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "7.11.0",
+    "eslint-plugin-vue": "^5.1.0",
     "gulp": "^4.0.0",
     "gulp-changed": "^3.2.0",
     "gulp-cli": "^2.0.1",
@@ -72,6 +75,7 @@
     "gulp-order": "^1.2.0",
     "gulp-plumber": "~1.1.0",
     "gulp-postcss": "^8.0.0",
+    "gulp-posthtml": "^3.0.4",
     "gulp-prettier": "^2.0.0",
     "gulp-prettydiff": "github:ksneo/gulp-prettydiff",
     "gulp-pug": "~3.3.0",
@@ -85,21 +89,25 @@
     "jstransformer-markdown-it": "^2.0.0",
     "node-sass": "^4.9.4",
     "popper.js": "^1.14.6",
+    "posthtml-bem": "^0.2.2",
+    "posthtml-include": "^1.2.0",
     "prettier": "^1.15.3",
     "pug": "~2.0.3",
     "pug-loader": "~2.3.0",
+    "raw-loader": "^1.0.0",
     "sass-loader": "~6.0.0",
     "stylelint": "^9.9.0",
     "stylelint-config-recommended": "^2.1.0",
     "stylelint-scss": "^3.4.4",
     "ts-loader": "^3.2.0",
-    "typescript": "^2.9.2",
+    "tslint": "^5.12.1",
+    "typescript": "^3.2.4",
     "vinyl-named": "^1.1.0",
     "vue-hot-reload-api": "~2.2.0",
-    "vue-loader": "~12.1.0",
+    "vue-loader": "^15.5.1",
     "vue-style-loader": "~3.0.0",
     "vue-template-compiler": "~2.5.22",
     "webpack": "~4.28.4",
-    "webpack-stream": "~3.2.0"
+    "webpack-stream": "^5.2.1"
   }
 }
