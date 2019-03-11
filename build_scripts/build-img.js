@@ -10,8 +10,8 @@ gulp.task('build:img', cb => {
             $.imagemin([
                 $.imagemin.optipng({ optimizationLevel: 3 }),
                 $.imagemin.jpegtran({ progressive: true }),
-                $.imagemin.svgo()
-            ])
+                $.imagemin.svgo(),
+            ]),
         )
         .pipe(gulp.dest(paths.src.static));
     cb();

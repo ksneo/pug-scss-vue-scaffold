@@ -10,13 +10,14 @@ import './build_scripts/build-css';
 import './build_scripts/build-static';
 import './build_scripts/build-webpack';
 import './build_scripts/build-img';
+import './build_scripts/copy-bundle';
 import { root, paths, resource, buildSettings } from './build_scripts/settings';
 
 const browserSync = browserSyncTool.create('sync');
 
 // clean dist
 gulp.task('clean', cb => {
-    del.sync([`${paths.dist.root}/*`, `!${paths.dist.root}/.git*`], {
+    del.sync([`${paths.dist.static}/*`, `${paths.dist.root}/*`], {
         force: true
     });
 
@@ -121,4 +122,4 @@ gulp.task('server', cb => {
 });
 
 // build and watch for developer
-gulp.task('default', gulp.series(['build', 'server']));
+gulp.task('default', gulp.series(['build', 'copy:bundle', 'server']));

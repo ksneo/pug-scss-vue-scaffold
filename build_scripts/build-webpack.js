@@ -6,6 +6,7 @@ import named from 'vinyl-named';
 import browserSyncTool from 'browser-sync';
 import VueLoaderPlugin from 'vue-loader/lib/plugin';
 import { paths, resource, production } from './settings';
+import { root } from './helpers';
 
 const $ = gulpLoaderPlugins();
 // compile Webpack [ ES6(Babel) / Vue -> Multipage ]
@@ -23,7 +24,21 @@ gulp.task('build:webpack', cb => {
                 { test: /\.js$/, use: 'babel-loader', exclude: /node_modules/ },
                 { test: /\.ts$/, use: 'babel-loader', exclude: /node_modules/ },
                 { test: /\.vue$/, use: 'vue-loader', exclude: /node_modules/ },
-                { test: /\.html$/, use: 'raw-loader' }
+                { test: /\.html$/, use: 'raw-loader' },
+                {
+                    test: /\.pug$/,
+                    use: [
+                        {
+                            loader: 'raw-loader'
+                        },
+                        {
+                            loader: 'pug-html-loader',
+                            options: {
+                                basedir: root(paths.src.root)
+                            }
+                        }
+                    ]
+                }
             ]
         },
         plugins: [new VueLoaderPlugin()],

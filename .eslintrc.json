@@ -10,12 +10,12 @@
     "extends": ["airbnb", "prettier", "plugin:vue/recommended"],
     "plugins": ["prettier"],
     "rules": {
-        "prettier/prettier": ["error", { "singleQuote": true }],
+        "prettier/prettier": ["error", { "singleQuote": true, "trailingComma": "all" }],
         "quotes": ["error", "single"],
         "linebreak-style": "off",
         "no-param-reassign": "off",
         "import/no-extraneous-dependencies": "off",
         "import/prefer-default-export": "off",
-        "global-require": 0  
+        "global-require": 0
     }
 }
